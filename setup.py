@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
-
+import numpy as np
 from distutils.core import setup, Extension
 from Cython.Build import cythonize
+import os
+os.environ["CC"] = "gcc-4.9"
 
 gibbsmodule = Extension(
     'gibbs',
@@ -12,6 +14,7 @@ gibbsmodule = Extension(
 
 setup(
     name = 'Gibbs aligner',
-    ext_modules = cythonize("cyalign.pyx") + [gibbsmodule]
+    ext_modules = cythonize("cyalign.pyx") + [gibbsmodule],
+    include_dirs=[np.get_include(), '.']
 )
 
