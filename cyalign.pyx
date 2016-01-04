@@ -259,7 +259,7 @@ cdef class Aligner:
         # need this anyway and it's already allocated.
         aaa = params[0][0]
         ibm_discretize(sent_ps, aaa)
-        return aaa
+        return aaa, sent_ps
 
 
 def align(list filenames,
