@@ -4,6 +4,8 @@
 # Where method is one of the symmetrization methods from atools (the -c
 # argument).
 
+
+# if only one argument takes *salign file as input
 #python3 efmaral.py -i "$1" >align.forward &
 python3 efmaral.py -r -i "$1" #>align.reverse #&
 #wait
