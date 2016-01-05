@@ -3,7 +3,7 @@ import numpy as np
 from distutils.core import setup, Extension
 from Cython.Build import cythonize
 import os
-os.environ["CC"] = "gcc-4.9"
+#os.environ["CC"] = "gcc-4.9"
 
 gibbsmodule = Extension(
     'gibbs',

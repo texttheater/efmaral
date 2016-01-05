@@ -14,6 +14,7 @@ cimport numpy as np
 cimport cython
 from cpython cimport bool
 from libc.stdio cimport fprintf, fdopen, fputc, FILE
+from libc.stdint cimport uint16_t
 
 # These are also defined in gibbs.c, and must be the same!
 # See gibbs.c for details.
@@ -334,3 +335,31 @@ def align(list filenames,
     return aligner.align(seed, n_samplers, null_prior, lex_alpha, null_alpha,
                          scheme)
 
+
+def ibm_print_prob(alignments_list, sent_ps_list, bool reverse):
+    cdef:
+        uint16_t[:] alignment
+        float[:,:] sent_ps
+        int i, j
+        int tok_i, other_tok_i
+        uint16_t null_link = NULL_LINK
+        float val
+
+    for alignment, sent_ps_flat in zip(alignments_list, sent_ps_list):
+        sent_ps = sent_ps_flat.reshape(alignment.shape[0], sent_ps_flat.shape[0] // alignment.shape[0])
+
+        for tok_i in range(alignment.shape[0]):
+            other_tok_i = alignment[tok_i]
+            if other_tok_i == null_link:
+                continue
+
+            if tok_i > 0:
+                print(end=' ')
+
+            val = sent_ps[tok_i, other_tok_i] / sum(sent_ps[tok_i, :])
+            if reverse:
+                print("{}-{} {:.8f}".format(tok_i, other_tok_i, val), end='')
+            else:
+                print("{}-{} {:.8f}".format(other_tok_i, tok_i, val), end='')
+
+        print()
