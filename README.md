@@ -1,4 +1,4 @@
-*This fork of **efmaral** adds the ability to output alignment probabilities*.
+*This fork of efmaral adds the ability to output alignment probabilities*.
 
 # efmaral
 Efficient Markov Chain word alignment
