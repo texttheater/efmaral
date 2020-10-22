@@ -356,10 +356,10 @@ def ibm_print_prob(alignments_list, sent_ps_list, bool reverse):
             if tok_i > 0:
                 print(end=' ')
 
-            val = sent_ps[tok_i, other_tok_i] / sum(sent_ps[tok_i, :])
             if reverse:
-                print("{}-{} {:.8f}".format(tok_i, other_tok_i, val), end='')
+                print("{}-{}".format(tok_i, other_tok_i, val), end='')
             else:
-                print("{}-{} {:.8f}".format(other_tok_i, tok_i, val), end='')
+                print("{}-{}".format(other_tok_i, tok_i, val), end='')
 
-        print()
+        matrix = [list(a) for a in np.asarray(sent_ps)]
+        print(' ', matrix)
