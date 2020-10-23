@@ -347,19 +347,7 @@ def ibm_print_prob(alignments_list, sent_ps_list, bool reverse):
 
     for alignment, sent_ps_flat in zip(alignments_list, sent_ps_list):
         sent_ps = sent_ps_flat.reshape(alignment.shape[0], sent_ps_flat.shape[0] // alignment.shape[0])
-
-        for tok_i in range(alignment.shape[0]):
-            other_tok_i = alignment[tok_i]
-            if other_tok_i == null_link:
-                continue
-
-            if tok_i > 0:
-                print(end=' ')
-
-            if reverse:
-                print("{}-{}".format(tok_i, other_tok_i, val), end='')
-            else:
-                print("{}-{}".format(other_tok_i, tok_i, val), end='')
-
+        matrix = np.asarray(sent_ps)
+        matrix /= matrix.sum(axis=1, keepdims=True)
         matrix = [list(a) for a in np.asarray(sent_ps)]
-        print(' ', matrix)
+        print(matrix)
